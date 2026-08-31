@@ -55,9 +55,6 @@ project-root
 
 127.0.0.1 mysql-service
 127.0.0.1 nacos-server
-127.0.0.1 seata-server
-127.0.0.1 sentinel-dashboard
-127.0.0.1 skywalking-server
 ```
 
 5. **启动微服务模块**
