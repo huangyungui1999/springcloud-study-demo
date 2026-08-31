@@ -1,0 +1,41 @@
+server:
+  port: 8010
+
+spring:
+  application:
+    name: storage-service
+  cloud:
+    nacos:
+#      discovery:
+#        server-addr: nacos-server:8848
+      config:
+        namespace: 390e134d-a75e-42ec-8ec7-2228e5db4622
+        server-addr: nacos-server:8848
+        file-extension: yml   #指定配置文件扩展名为yml
+
+  config:
+    import:
+      - optional:nacos:${spring.application.name}.yml
+      - optional:nacos:db-common.yml    #数据库公共配置
+      - nacos:nacos-discovery.yml
+
+#  datasource:
+#    url: jdbc:mysql://mysql-service:3306/tlmall_storage?useSSL=false&characterEncoding=utf8&allowPublicKeyRetrieval=true
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: your password
+#  main:
+#    allow-bean-definition-overriding: true
+#
+#mybatis:
+#  configuration:
+#    map-underscore-to-camel-case: true
+# 日志配置：核心是开启 SQL 打印
+logging:
+  level:
+    # 1. 打印 MyBatis 执行的 SQL（MyBatis/MyBatis-Plus 必配）
+    com.baomidou.mybatisplus: debug          # MyBatis-Plus 核心包
+    org.apache.ibatis: debug                  # MyBatis 核心包
+    org.example.storage.mapper: debug                # 替换成你自己的 Mapper 接口包路径
+    # 2. 打印 JDBC 底层执行的 SQL（通用，可选）
+#    org.springframework.jdbc: debug

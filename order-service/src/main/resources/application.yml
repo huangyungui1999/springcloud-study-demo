@@ -1,0 +1,41 @@
+server:
+  port: 8030
+
+spring:
+  application:
+    name: order-service
+  cloud:
+    nacos:
+      #      discovery:
+      #        server-addr: nacos-server:8848
+      config:
+        server-addr: nacos-server:8848
+        namespace: 390e134d-a75e-42ec-8ec7-2228e5db4622
+        file-extension: yml   #指定配置文件扩展名为yml
+
+  #    loadbalancer:
+  #      nacos:
+  #        enabled: true
+
+  config:
+    import:
+      - optional:nacos:${spring.application.name}.yml
+      - optional:nacos:db-common.yml    #数据库公共配置
+      - nacos:nacos-discovery.yml
+
+#  datasource:
+#    url: jdbc:mysql://mysql-service:3306/tlmall_order?useSSL=false&characterEncoding=utf8&allowPublicKeyRetrieval=true
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: your password
+#  main:
+#    allow-bean-definition-overriding: true
+#
+#mybatis:
+#  configuration:
+#    map-underscore-to-camel-case: true
+
+
+logging:
+  level:
+    com.alibaba.cloud.nacos: debug
