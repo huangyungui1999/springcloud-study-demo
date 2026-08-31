@@ -34,7 +34,7 @@
         var userId = $("#userId").val();
         var commodityCode = $("#commodityCode").val();
         $.ajax({
-            url: "http://tlmall-gateway:18888/storage/",
+            url: "http://gateway-service:18888/storage/",
             type: "get",
             dataType: "json",
             data: "commodityCode=" + commodityCode,
@@ -44,7 +44,7 @@
             }
         });
         $.ajax({
-            url: "http://tlmall-gateway:18888/account/",
+            url: "http://gateway-service:18888/account/",
             type: "get",
             dataType: "json",
             data: "userId=" + userId,
@@ -55,14 +55,14 @@
         });
         $.ajax({
             type: "POST",
-            url: "http://tlmall-gateway:18888/order/create",
+            url: "http://gateway-service:18888/order/create",
             data: $('#orderForm').serialize(),
             dataType: 'json',
             async:false,
             success: function (res) {
                 $('#orderResultSection').append(`<p> [${getDateTime()}] ${res.message} </p>`);
                 $.ajax({
-                    url: "http://tlmall-gateway:18888/storage/",
+                    url: "http://gateway-service:18888/storage/",
                     type: "get",
                     dataType: "json",
                     data: "commodityCode=" + commodityCode,
@@ -72,7 +72,7 @@
                     }
                 });
                 $.ajax({
-                    url: "http://tlmall-gateway:18888/account/",
+                    url: "http://gateway-service:18888/account/",
                     type: "get",
                     dataType: "json",
                     data: "userId=" + userId,
