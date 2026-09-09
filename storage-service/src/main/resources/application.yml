@@ -17,7 +17,15 @@ spring:
     import:
       - optional:nacos:${spring.application.name}.yml
       - optional:nacos:db-common.yml    #数据库公共配置
+      - optional:nacos:rabbitmq-common.yml
       - nacos:nacos-discovery.yml
+
+  rabbitmq:
+    host: # 请填写 RabbitMQ 地址，例如 localhost
+    port: 5672
+    username: # 请填写用户名
+    password: # 请填写密码
+    virtual-host: /
 
 #  datasource:
 #    url: jdbc:mysql://mysql-service:3306/tlmall_storage?useSSL=false&characterEncoding=utf8&allowPublicKeyRetrieval=true
