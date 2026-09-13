@@ -20,7 +20,6 @@ public class StorageController {
 	private StorageService storageService;
 
 	@PostMapping("/reduce-stock")
-	@Transactional
 	public Result<?> reduceStock(@RequestBody StorageDTO storageDTO) {
 		try {
 			storageService.reduceStock(storageDTO.getCommodityCode(),

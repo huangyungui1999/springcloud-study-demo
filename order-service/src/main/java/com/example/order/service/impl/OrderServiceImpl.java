@@ -4,6 +4,7 @@ package com.example.order.service.impl;
 import com.example.common.BusinessException;
 import com.example.common.Result;
 import com.example.order.entity.Order;
+import com.example.order.es.impl.OrderSearchService;
 import com.example.order.feign.AccountServiceFeignClient;
 import com.example.order.feign.StorageServiceFeignClient;
 import com.example.order.feign.dto.AccountDTO;
@@ -39,6 +40,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     RestTemplate restTemplate;
 
+    @Autowired
+    private OrderSearchService orderSearchService;
+
     @Override
 //    @GlobalTransactional(name="createOrder",rollbackFor=Exception.class)
     public Result<?> createOrder(String userId, String commodityCode, Integer count) {
@@ -55,7 +59,8 @@ public class OrderServiceImpl implements OrderService {
         //String storage_url = "http://tlmall-storage/storage/reduce-stock";
         //Integer storageCode = restTemplate.postForObject(storage_url,storageDTO, Result.class).getCode();
         //openFeign远程调用
-        Integer storageCode = storageService.reduceStock(storageDTO).getCode();
+        Result<?> result = storageService.reduceStock(storageDTO);
+        Integer storageCode = result.getCode();
         if (storageCode.equals(COMMON_FAILED.getCode())) {
             throw new BusinessException("stock not enough");
         }
@@ -86,6 +91,9 @@ public class OrderServiceImpl implements OrderService {
         order.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         orderMapper.saveOrder(order);
         logger.info("[createOrder] orderId: {}", order.getId());
+
+        //创建es文档
+        orderSearchService.save(order);
 
         return Result.success(order);
     }

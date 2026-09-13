@@ -35,7 +35,15 @@ spring:
 #  configuration:
 #    map-underscore-to-camel-case: true
 
+#ElasticSearch配置
+  elasticsearch:
+    uris: http://127.0.0.1:9200
+#    username: elastic
+#    password: xxx
+
 
 logging:
   level:
     com.alibaba.cloud.nacos: debug
+
+
